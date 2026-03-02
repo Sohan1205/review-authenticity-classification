@@ -59,3 +59,14 @@ Model performance was evaluated using:
 ## ▶️ How to Run the Project
 
 1. Install dependencies:
+---
+
+## 📊 Model Performance Comparison
+
+| Model               | Accuracy | Precision | Recall | F1 Score |
+|---------------------|----------|-----------|--------|----------|
+| Naive Bayes         | 0.82     | 0.80      | 0.78   | 0.79     |
+| Logistic Regression | 0.86     | 0.84      | 0.83   | 0.83     |
+| Linear SVM          | 0.88     | 0.87      | 0.85   | 0.86     |
+
+Among the tested models, **Linear SVM achieved the best overall performance** and was selected as the final model.
