@@ -1,22 +1,106 @@
 import streamlit as st
 import joblib
+import pandas as pd
 
-st.title("Review Authenticity Checker")
+st.set_page_config(page_title="Smart Review Trust Assistant", page_icon="🛒", layout="wide")
 
-# Load model
 model = joblib.load("models/model.pkl")
 vectorizer = joblib.load("models/vectorizer.pkl")
 
-review = st.text_area("Enter a product review:")
+positive_words = {"good","great","amazing","excellent","perfect","love","best","happy","satisfied"}
+negative_words = {"bad","worst","fake","terrible","waste","fraud","scam","poor","disappointed"}
 
-if st.button("Check Review"):
-    if review:
-        review_vec = vectorizer.transform([review])
-        prediction = model.predict(review_vec)[0]
+def sentiment(text):
+    words = text.lower().split()
+    pos = sum(1 for w in words if w in positive_words)
+    neg = sum(1 for w in words if w in negative_words)
 
-        if prediction == 1:
-            st.success("This review looks Genuine")
+    if pos > neg:
+        return "Positive"
+    elif neg > pos:
+        return "Negative"
+    return "Neutral"
+
+st.title("🛒 Smart Review Trust Assistant")
+
+tabs = st.tabs(["Single Review Check","Bulk CSV Analysis"])
+
+# ---------------- SINGLE REVIEW ----------------
+
+with tabs[0]:
+
+    review = st.text_area("Enter product review")
+
+    if st.button("Check Review"):
+
+        if review.strip() == "":
+            st.warning("Enter a review first")
         else:
-            st.error("This review might be Fake")
-    else:
-        st.warning("Please enter a review")
+
+            vec = vectorizer.transform([review])
+            pred = model.predict(vec)[0]
+
+            if hasattr(model,"predict_proba"):
+                confidence = model.predict_proba(vec).max()*100
+            else:
+                confidence = 80
+
+            sent = sentiment(review)
+
+            c1,c2,c3 = st.columns(3)
+
+            with c1:
+                if pred == 1:
+                    st.success("Genuine Review")
+                else:
+                    st.error("Fake Review")
+
+            with c2:
+                st.metric("Confidence",f"{confidence:.2f}%")
+
+            with c3:
+                st.metric("Sentiment",sent)
+
+# ---------------- BULK CSV ----------------
+
+with tabs[1]:
+
+    file = st.file_uploader("Upload CSV with column name 'review'",type=["csv"])
+
+    if file:
+
+        df = pd.read_csv(file)
+
+        if "review" not in df.columns:
+            st.error("CSV must contain column 'review'")
+        else:
+
+            reviews = df["review"].astype(str)
+
+            vec = vectorizer.transform(reviews)
+
+            preds = model.predict(vec)
+
+            if hasattr(model,"predict_proba"):
+                conf = model.predict_proba(vec).max(axis=1)*100
+            else:
+                conf = [80]*len(reviews)
+
+            df["prediction"] = ["Genuine" if p==1 else "Fake" for p in preds]
+            df["confidence"] = conf
+            df["sentiment"] = [sentiment(r) for r in reviews]
+
+            st.dataframe(df)
+
+            fake_count = (df["prediction"]=="Fake").sum()
+
+            total = len(df)
+
+            fake_ratio = fake_count/total*100
+
+            if fake_ratio < 20:
+                st.success("Most reviews look trustworthy")
+            elif fake_ratio < 40:
+                st.warning("Some reviews look suspicious")
+            else:
+                st.error("High number of fake reviews detected")
