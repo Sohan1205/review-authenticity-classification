@@ -1,7 +1,7 @@
 import streamlit as st
 import joblib
 import pandas as pd
-
+ingredient_db = pd.read_csv("dataset/ingredient_db.csv")
 st.set_page_config(page_title="Smart Review Trust Assistant", page_icon="🛒", layout="wide")
 
 model = joblib.load("models/model.pkl")
