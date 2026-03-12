@@ -132,3 +132,25 @@ if st.button("Check Ingredient"):
         st.write("Safety:", data["Safety"])
         st.write("Description:", data["Description"])
         st.write("Risk:", data["Risk"])
+st.header("Ingredient Safety Check")
+
+ingredient_name = st.text_input("Enter ingredient name")
+
+if st.button("Check Ingredient"):
+    result = ingredient_db[
+        ingredient_db["ingredient"].str.lower() == ingredient_name.lower()
+    ]
+
+    if result.empty:
+        st.error("Ingredient not found in database")
+    else:
+        data = result.iloc[0]
+
+        st.success(f"Ingredient: {data['ingredient']}")
+        st.write("Category:", data["category"])
+        st.write("Safety Level:", data["safety_level"])
+        st.write("Good Side:", data["good_side"])
+        st.write("Bad Side:", data["bad_side"])
+        st.write("Best For:", data["best_for"])
+        st.write("Avoid For:", data["avoid_for"])
+        st.write("Notes:", data["notes"])
