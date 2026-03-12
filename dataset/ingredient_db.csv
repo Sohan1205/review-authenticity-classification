@@ -1,0 +1,21 @@
+ingredient,category,safety_level,good_side,bad_side,best_for,avoid_for,notes
+Water,General,Safe,Basic solvent,None,All users,None,Common base ingredient
+Glycerin,Skincare,Safe,Hydrates and softens skin,None,Dry skin,None,Common moisturizer
+Niacinamide,Skincare,Safe,Supports skin barrier and brightening,Mild irritation in rare cases,Most skin,None,Popular skincare ingredient
+Salicylic Acid,Skincare,Caution,Helps acne and oily skin,May dry or irritate skin,Oily skin,Sensitive skin,Use carefully on sensitive skin
+Fragrance,Skincare,Caution,Improves smell,May irritate sensitive skin,None,Sensitive skin,Common irritant for some users
+Alcohol Denat,Perfume,Caution,Helps fragrance spread quickly,May dry or irritate skin,None,Sensitive skin,Common in perfumes
+Limonene,Perfume,Caution,Provides citrus scent,May cause sensitivity in some users,None,Sensitive skin,Common fragrance allergen
+Linalool,Perfume,Caution,Provides floral scent,May irritate some users,None,Sensitive skin,Common fragrance ingredient
+Citral,Perfume,Caution,Provides lemon-like scent,Possible allergen,None,Sensitive skin,Used in fragrance blends
+Benzyl Alcohol,Perfume,Caution,Acts as preservative and fragrance component,May irritate sensitive skin,None,Sensitive skin,Common in perfumes and cosmetics
+Sugar,Food,Caution,Provides quick energy,Too much sugar is unhealthy,None,Diabetes,High intake is harmful
+Salt,Food,Caution,Improves taste,Too much sodium may increase health risk,None,High blood pressure,Use in moderation
+Sodium Benzoate,Food,Caution,Preservative,Not ideal in excess,None,Sensitive users,Common preservative
+Citric Acid,Food,Safe,Flavor balance and preservation,May irritate some users in excess,None,Highly sensitive users,Common acid regulator
+Artificial Flavor,Food,Caution,Improves taste,May cause sensitivity in some users,None,Sensitive users,Generic additive category
+Caffeine,Drink,Caution,Increases alertness,May disturb sleep or increase anxiety,None,Children,Poor choice late at night or for sensitive users
+Vitamin C,Drink,Safe,Supports immunity,None,Most users,None,Beneficial nutrient
+Trans Fat,Food,Risky,Improves shelf stability,Linked with poor heart health,None,All users,Best avoided
+Aloe Vera,Skincare,Safe,Soothes and hydrates skin,None,Sensitive skin,None,Common soothing ingredient
+Propylene Glycol,General,Caution,Helps retain moisture and dissolve ingredients,May irritate some users,None,Sensitive skin,Common in cosmetics and foods
