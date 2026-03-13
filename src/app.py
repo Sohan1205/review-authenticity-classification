@@ -83,7 +83,6 @@ with tabs[1]:
             df["sentiment"] = [sentiment(r) for r in reviews]
 
             st.dataframe(df, use_container_width=True)
-
             fake_count = (df["prediction"] == "Fake").sum()
             total = len(df)
             fake_ratio = fake_count / total * 100 if total else 0
@@ -100,47 +99,8 @@ ingredient_name = st.text_input("Enter ingredient name")
 
 if st.button("Check Ingredient"):
     result = ingredient_db[
-        ingredient_db["Ingredient"].str.lower() == ingredient_name.lower()
-    ]
-
-    if result.empty:
-        st.error("Ingredient not found in database")
-    else:
-        data = result.iloc[0]
-
-        st.success(f"Ingredient: {data['Ingredient']}")
-        st.write("Category:", data["Category"])
-        st.write("Safety:", data["Safety"])
-        st.write("Description:", data["Description"])
-        st.write("Risk:", data["Risk"])
-st.header("Ingredient Safety Check")
-
-ingredient_name = st.text_input("Enter ingredient name")
-
-if st.button("Check Ingredient"):
-    result = ingredient_db[
-        ingredient_db["Ingredient"].str.lower() == ingredient_name.lower()
-    ]
-
-    if result.empty:
-        st.error("Ingredient not found in database")
-    else:
-        data = result.iloc[0]
-
-        st.success(f"Ingredient: {data['Ingredient']}")
-        st.write("Category:", data["Category"])
-        st.write("Safety:", data["Safety"])
-        st.write("Description:", data["Description"])
-        st.write("Risk:", data["Risk"])
-st.header("Ingredient Safety Check")
-
-ingredient_name = st.text_input("Enter ingredient name")
-
-if st.button("Check Ingredient"):
-    result = ingredient_db[
         ingredient_db["ingredient"].str.lower() == ingredient_name.lower()
     ]
-
     if result.empty:
         st.error("Ingredient not found in database")
     else:
@@ -154,3 +114,5 @@ if st.button("Check Ingredient"):
         st.write("Best For:", data["best_for"])
         st.write("Avoid For:", data["avoid_for"])
         st.write("Notes:", data["notes"])
+
+    
