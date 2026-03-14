@@ -95,12 +95,28 @@ with tabs[1]:
                 st.error("High number of fake reviews detected")
 st.header("Ingredient Safety Check")
 
-ingredient_name = st.text_input("Enter ingredient name")
+ingredient_text = st.text_area("Enter ingredients separated by commas")
 
 if st.button("Check Ingredient"):
-    result = ingredient_db[
-        ingredient_db["ingredient"].str.lower() == ingredient_name.lower()
-    ]
+    ingredients = [i.strip().lower() for i in ingredient_text.split(",")]
+
+for ing in ingredients:
+    result = ingredient_db[ingredient_db["ingredient"].str.lower() == ing]
+
+    if result.empty:
+        st.warning(f"{ing} not found in database")
+    else:
+        data = result.iloc[0]
+
+        st.success(f"Ingredient: {data['ingredient']}")
+        st.write("Category:", data["category"])
+        st.write("Safety Level:", data["safety_level"])
+        st.write("Good Side:", data["good_side"])
+        st.write("Bad Side:", data["bad_side"])
+        st.write("Best For:", data["best_for"] if pd.notna(data["best_for"]) else "General use")
+        st.write("Avoid For:", data["avoid_for"])
+        st.write("Notes:", data["notes"])
+        st.divider()
     if result.empty:
         st.error("Ingredient not found in database")
     else:
