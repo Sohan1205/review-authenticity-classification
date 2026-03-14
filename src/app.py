@@ -30,34 +30,35 @@ with tabs[0]:
     review = st.text_area("Enter product review", height=180)
 
     if st.button("Check Review", use_container_width=True):
+
         if review.strip() == "":
-            st.warning("Enter a review first")
+        st.warning("Enter a review first")
+
+    else:
+        vec = vectorizer.transform([review])
+        pred = model.predict(vec)[0]
+
+        if hasattr(model, "predict_proba"):
+            confidence = model.predict_proba(vec).max() * 100
         else:
-            vec = vectorizer.transform([review])
-            pred = model.predict(vec)[0]
+            confidence = 80.0
 
-            if hasattr(model, "predict_proba"):
-                confidence = model.predict_proba(vec).max() * 100
+        sent = sentiment(review)
+        trust_score = confidence if pred == 1 else 100 - confidence
+
+        c1, c2, c3 = st.columns(3)
+
+        with c1:
+            if pred == 1:
+                st.success("✅ Genuine Review")
             else:
-                confidence = 80.0
+                st.error("❌ Fake Review")
 
-            sent = sentiment(review)
-            trust_score = confidence if pred == 1 else 100 - confidence
+        with c2:
+            st.metric("Confidence", f"{confidence:.2f}%")
 
-            c1, c2, c3 = st.columns(3)
-
-            with c1:
-                if pred == 1:
-                    st.success("✅ Genuine Review")
-                else:
-                    st.error("❌ Fake Review")
-
-            with c2:
-                st.metric("Confidence", f"{confidence:.2f}%")
-
-            with c3:
-                st.metric("Sentiment", sent)
-
+        with c3:
+            st.metric("Sentiment", sent)
             st.metric("Trust Score", f"{trust_score:.2f}/100")
 
 with tabs[1]:
