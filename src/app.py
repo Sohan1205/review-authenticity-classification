@@ -98,15 +98,31 @@ st.header("Ingredient Safety Check")
 ingredient_text = st.text_area("Enter ingredients separated by commas")
 
 if st.button("Check Ingredient"):
-    ingredients = [i.strip().lower() for i in ingredient_text.split(",")]
 
-for ing in ingredients:
-    result = ingredient_db[ingredient_db["ingredient"].str.lower() == ing]
+    ingredients = [i.strip().lower() for i in ingredient_text.split(",") if i.strip()]
 
-    if result.empty:
-        st.warning(f"{ing} not found in database")
-    else:
-        data = result.iloc[0]
+    if not ingredients:
+        st.warning("Please enter at least one ingredient")
+
+    for ing in ingredients:
+
+        result = ingredient_db[ingredient_db["ingredient"].str.lower() == ing]
+
+        if result.empty:
+            st.warning(f"{ing} not found in database")
+
+        else:
+            data = result.iloc[0]
+
+            st.success(f"Ingredient: {data['ingredient']}")
+            st.write("Category:", data["category"])
+            st.write("Safety Level:", data["safety_level"])
+            st.write("Good Side:", data["good_side"])
+            st.write("Bad Side:", data["bad_side"])
+            st.write("Best For:", data["best_for"] if pd.notna(data["best_for"]) else "General use")
+            st.write("Avoid For:", data["avoid_for"])
+            st.write("Notes:", data["notes"])
+            st.divider()
 
         st.success(f"Ingredient: {data['ingredient']}")
         st.write("Category:", data["category"])
@@ -117,8 +133,7 @@ for ing in ingredients:
         st.write("Avoid For:", data["avoid_for"])
         st.write("Notes:", data["notes"])
         st.divider()
-    if result.empty:
-        st.error("Ingredient not found in database")
+    
     else:
         data = result.iloc[0]
 
