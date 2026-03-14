@@ -111,7 +111,7 @@ if st.button("Check Ingredient"):
         st.write("Safety Level:", data["safety_level"])
         st.write("Good Side:", data["good_side"])
         st.write("Bad Side:", data["bad_side"])
-        st.write("Best For:", data["best_for"])
+        st.write("Best For:", data["best_for"] if pd.notna(data["best_for"]) else "General use")
         st.write("Avoid For:", data["avoid_for"])
         st.write("Notes:", data["notes"])
 
