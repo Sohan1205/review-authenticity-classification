@@ -112,10 +112,9 @@ if st.button("Check Ingredient"):
             st.warning(f"{ing} not found in database")
 
         else:
-            data = result.iloc[0]
+    st.error("High number of fake reviews detected")
 
-            st.success(f"Ingredient: {data['ingredient']}")
-      st.header("Ingredient Safety Check")
+st.header("Ingredient Safety Check")
 
 ingredient_text = st.text_area("Enter ingredients separated by commas")
 
@@ -133,34 +132,21 @@ if st.button("Check Ingredient"):
         if result.empty:
             st.warning(f"{ing} not found in database")
 
-        else:
+                else:
             data = result.iloc[0]
 
             st.success(f"Ingredient: {data['ingredient']}")
-
             st.write("Category:", data["category"])
             st.write("Safety Level:", data["safety_level"])
             st.write("Good Side:", data["good_side"])
+            st.write("Bad Side:", data["bad_side"] if pd.notna(data["bad_side"]) else "None")
+            st.write("Best For:", data["best_for"] if pd.notna(data["best_for"]) else "General use")
+            st.write("Avoid For:", data["avoid_for"] if pd.notna(data["avoid_for"]) else "None")
+            st.write("Notes:", data["notes"] if pd.notna(data["notes"]) else "None")
 
-            st.write(
-                "Bad Side:",
-                data["bad_side"] if pd.notna(data["bad_side"]) else "None"
-            )
+            st.divider()
 
-            st.write(
-                "Best For:",
-                data["best_for"] if pd.notna(data["best_for"]) else "General use"
-            )
-
-            st.write(
-                "Avoid For:",
-                data["avoid_for"] if pd.notna(data["avoid_for"]) else "None"
-            )
-
-            st.write(
-                "Notes:",
-                data["notes"] if pd.notna(data["notes"]) else "None"
-            )
+ 
 
 
        
