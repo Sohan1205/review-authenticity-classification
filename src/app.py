@@ -93,26 +93,6 @@ with tabs[1]:
                 st.warning("Some reviews look suspicious")
             else:
                 st.error("High number of fake reviews detected")
-st.header("Ingredient Safety Check")
-
-ingredient_text = st.text_area("Enter ingredients separated by commas")
-
-if st.button("Check Ingredient"):
-
-    ingredients = [i.strip().lower() for i in ingredient_text.split(",") if i.strip()]
-
-    if not ingredients:
-        st.warning("Please enter at least one ingredient")
-
-    for ing in ingredients:
-
-        result = ingredient_db[ingredient_db["ingredient"].str.lower() == ing]
-
-        if result.empty:
-            st.warning(f"{ing} not found in database")
-
-        else:
-    st.error("High number of fake reviews detected")
 
 st.header("Ingredient Safety Check")
 
